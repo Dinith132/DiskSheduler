@@ -3,8 +3,8 @@ package org.example.disksheduler;
 import java.util.List;
 
 public class DiskScheduleResult {
-    private int totalSeekTime;
-    private int[] seekSequence;
+    final private int totalSeekTime;
+    final private int[] seekSequence;
 
     public DiskScheduleResult(int totalSeekTime, List<Integer> seekSequence) {
         this.totalSeekTime = totalSeekTime;
