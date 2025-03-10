@@ -1,0 +1,136 @@
+/* Main application styling */
+.root {
+    -fx-background-color: #f5f5f5;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* GridPane styling */
+.grid {
+    -fx-padding: 20px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Title styling */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2196F3;
+}
+
+/* Label styling */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Text field styling */
+.text-field {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 4px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #2196F3;
+    -fx-background-color: #ffffff;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 4px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px;
+    -fx-font-size: 14px;
+}
+
+.combo-box:focused {
+    -fx-border-color: #2196F3;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 4px 8px;
+}
+
+.combo-box .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+}
+
+/* Button styling */
+.button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #0d8bf2;
+}
+
+.button:pressed {
+    -fx-background-color: #0b7ad1;
+}
+
+/* Result label styling */
+.result-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4CAF50;
+    -fx-padding: 10px 0;
+}
+
+/* Chart styling */
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-legend-visible: false;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e0e0e0;
+    -fx-stroke-dash-array: 2 2;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e0e0e0;
+    -fx-stroke-dash-array: 2 2;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-stroke: #2196F3;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #2196F3;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.axis {
+    -fx-tick-label-fill: #666666;
+    -fx-font-size: 12px;
+}
+
+.axis-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
