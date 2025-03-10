@@ -44,12 +44,11 @@ public class DiskSchedulingApp extends Application {
         // Algorithm selection
         Label algorithmLabel = new Label("Select Algorithm:");
         algorithmComboBox = new ComboBox<>(FXCollections.observableArrayList(
-                "FCFS - First Come First Serve",
-                "SSTF - Shortest Seek Time First",
-                "SCAN - Elevator",
-                "C-SCAN - Circular SCAN",
-                "LOOK",
-                "C-LOOK - Circular LOOK"
+                "FCFS",
+                "SSTF",
+                "SCAN",
+                "C-SCAN",
+                "C-LOOK"
         ));
         algorithmComboBox.getSelectionModel().selectFirst();
         grid.add(algorithmLabel, 0, 2);
@@ -108,9 +107,6 @@ public class DiskSchedulingApp extends Application {
                     break;
                 case "C-SCAN - Circular SCAN":
                     result = scheduler.C_SCAN(headPosition, requests);
-                    break;
-                case "LOOK":
-                    result = scheduler.LOOK(headPosition, requests);
                     break;
                 case "C-LOOK - Circular LOOK":
                     result = scheduler.C_LOOK(headPosition, requests);

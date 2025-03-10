@@ -143,43 +143,6 @@ public class DiskScheduler {
         return new DiskScheduleResult(totalSeekTime, seekSequence);
     }
 
-    public DiskScheduleResult LOOK(int headPosition, int[] requests) {
-        int totalSeekTime = 0;
-        int currentPosition = headPosition;
-        List<Integer> seekSequence = new ArrayList<>();
-        seekSequence.add(headPosition);
-
-        List<Integer> requestsList = new ArrayList<>();
-        for (int req : requests) {
-            requestsList.add(req);
-        }
-
-        int max = findMax(requests);
-        int min = findMin(requests);
-
-        // Move towards higher track numbers
-        for (int i = currentPosition; i <= max; i++) {
-            if (requestsList.contains(i)) {
-                totalSeekTime += Math.abs(currentPosition - i);
-                currentPosition = i;
-                seekSequence.add(i);
-                requestsList.remove(Integer.valueOf(i));
-            }
-        }
-
-        // Move towards lower track numbers
-        for (int i = max - 1; i >= min; i--) {
-            if (requestsList.contains(i)) {
-                totalSeekTime += Math.abs(currentPosition - i);
-                currentPosition = i;
-                seekSequence.add(i);
-                requestsList.remove(Integer.valueOf(i));
-            }
-        }
-
-        return new DiskScheduleResult(totalSeekTime, seekSequence);
-    }
-
     public DiskScheduleResult C_LOOK(int headPosition, int[] requests) {
         int totalSeekTime = 0;
         int currentPosition = headPosition;
