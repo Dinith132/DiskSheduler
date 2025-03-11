@@ -70,12 +70,12 @@ public class DiskScheduler {
             requestsList.add(req);
         }
 
-        int end = 200;
+        int end = 199;
         int start = 0;
 
         // Move towards higher track numbers
         for (int i = currentPosition; i <= end; i++) {
-            if (requestsList.contains(i)) {
+            if (requestsList.contains(i) || i == end) {
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);
@@ -110,12 +110,12 @@ public class DiskScheduler {
             requestsList.add(req);
         }
 
-        int end = 200;
+        int end = 199;
         int start = 0;
 
         // Move towards higher track numbers
         for (int i = currentPosition; i <= end; i++) {
-            if (requestsList.contains(i)) {
+            if (requestsList.contains(i) || i == end) {
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);
@@ -132,7 +132,7 @@ public class DiskScheduler {
 
         // Move towards head position
         for (int i = start; i <= headPosition; i++) {
-            if (requestsList.contains(i)) {
+            if (requestsList.contains(i) || i == start) {
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);

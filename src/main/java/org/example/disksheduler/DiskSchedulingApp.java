@@ -66,16 +66,21 @@ public class DiskSchedulingApp extends Application {
         // Chart setup
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Sequence");
-        yAxis.setLabel("Position");
+        xAxis.setTickLabelRotation(-90);
+        yAxis.setTickLabelRotation(-90);
+
+        xAxis.setLabel("Sequence");  // X axis is now Sequence
+        yAxis.setLabel("Disk Position"); // Y axis is now Disk Position
 
         chart = new LineChart<>(xAxis, yAxis);
-        chart.setTitle("Disk Movement");
-        chart.setPrefHeight(400);
+        chart.setPrefHeight(1000);
         chart.setPrefWidth(600);
+        chart.setRotate(90);
+        chart.setLegendVisible(false); // Hide legend
+
         grid.add(chart, 0, 5, 2, 1);
 
-        Scene scene = new Scene(grid, 650, 600);
+        Scene scene = new Scene(grid, 650, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -96,19 +101,22 @@ public class DiskSchedulingApp extends Application {
             DiskScheduleResult result;
 
             switch (algorithm) {
-                case "FCFS - First Come First Serve":
+
+                case "FCFS":{
                     result = scheduler.FCFS(headPosition, requests);
                     break;
-                case "SSTF - Shortest Seek Time First":
+                }
+
+                case "SSTF":
                     result = scheduler.SSTF(headPosition, requests);
                     break;
-                case "SCAN - Elevator":
+                case "SCAN":
                     result = scheduler.SCAN(headPosition, requests);
                     break;
-                case "C-SCAN - Circular SCAN":
+                case "C-SCAN":
                     result = scheduler.C_SCAN(headPosition, requests);
                     break;
-                case "C-LOOK - Circular LOOK":
+                case "C-LOOK":
                     result = scheduler.C_LOOK(headPosition, requests);
                     break;
                 default:
@@ -120,6 +128,12 @@ public class DiskSchedulingApp extends Application {
 
             // Update chart
             updateChart(result.getSeekSequence());
+
+            System.out.println("Seek Sequence:===========================================================");
+            for(int i:result.getSeekSequence()){
+                System.out.print(i+"   ");
+            }
+            System.out.println("Seek Sequence:===========================================================");
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -137,6 +151,7 @@ public class DiskSchedulingApp extends Application {
         series.setName("Head Movement");
 
         for (int i = 0; i < sequence.length; i++) {
+            // Use index as X (Sequence) and sequence value as Y (Disk Position)
             series.getData().add(new XYChart.Data<>(i, sequence[i]));
         }
 
