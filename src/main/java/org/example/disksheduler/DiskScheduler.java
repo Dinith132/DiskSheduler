@@ -70,25 +70,33 @@ public class DiskScheduler {
             requestsList.add(req);
         }
 
+        System.out.println(requestsList);
+
         int end = 199;
         int start = 0;
 
         // Move towards higher track numbers
-        for (int i = currentPosition; i <= end; i++) {
-            if (requestsList.contains(i) || i == end) {
+        for (int i = currentPosition; i >= start; i--) {
+            if (requestsList.contains(i) || i == start) {
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);
                 requestsList.remove(Integer.valueOf(i));
+
+                System.out.println("removes======================================="+i);
             }
         }
 
-        totalSeekTime += Math.abs(currentPosition - end);
-        currentPosition = end;
+        System.out.println(requestsList);
+
+        totalSeekTime += Math.abs(currentPosition - start);
+        currentPosition = start;
 
         // Move towards lower track numbers
-        for (int i = end - 1; i >= start; i--) {
+        for (int i = start; i <= end; i++) {
+
             if (requestsList.contains(i)) {
+                System.out.println("up======================================="+i);
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);
