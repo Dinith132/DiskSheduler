@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -59,6 +61,11 @@ public class DiskSchedulingApp extends Application {
         calculateButton.setOnAction(e -> calculateSeekOperations());
         grid.add(calculateButton, 1, 3);
 
+        // Add Comparison button
+        Button comparisonButton = new Button("Comparison");
+        comparisonButton.setOnAction(e -> showComparisonGraph());
+        grid.add(comparisonButton, 2, 4); // Changed column from 1 to 2
+
         // Result label
         resultLabel = new Label();
         grid.add(resultLabel, 0, 4, 2, 1);
@@ -106,7 +113,6 @@ public class DiskSchedulingApp extends Application {
                     result = scheduler.FCFS(headPosition, requests);
                     break;
                 }
-
                 case "SSTF":
                     result = scheduler.SSTF(headPosition, requests);
                     break;
@@ -129,11 +135,9 @@ public class DiskSchedulingApp extends Application {
             // Update chart
             updateChart(result.getSeekSequence());
 
-            System.out.println("Seek Sequence:===========================================================");
             for(int i:result.getSeekSequence()){
                 System.out.print(i+"   ");
             }
-            System.out.println("Seek Sequence:===========================================================");
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -148,7 +152,7 @@ public class DiskSchedulingApp extends Application {
         chart.getData().clear();
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Head Movement");
+//        series.setName("Head Movement");
 
         for (int i = 0; i < sequence.length; i++) {
             // Use index as X (Sequence) and sequence value as Y (Disk Position)
@@ -156,6 +160,60 @@ public class DiskSchedulingApp extends Application {
         }
 
         chart.getData().add(series);
+    }
+
+    private void showComparisonGraph() {
+        try {
+            int headPosition = Integer.parseInt(headPositionField.getText().trim());
+            String[] requestsStr = requestsField.getText().split(",");
+            int[] requests = new int[requestsStr.length];
+
+            for (int i = 0; i < requestsStr.length; i++) {
+                requests[i] = Integer.parseInt(requestsStr[i].trim());
+            }
+
+            DiskScheduler scheduler = new DiskScheduler();
+
+            // Calculate total seek operations for all algorithms
+            int fcfsSeek = scheduler.FCFS(headPosition, requests).getTotalSeekTime();
+            int sstfSeek = scheduler.SSTF(headPosition, requests).getTotalSeekTime();
+            int scanSeek = scheduler.SCAN(headPosition, requests).getTotalSeekTime();
+            int cscanSeek = scheduler.C_SCAN(headPosition, requests).getTotalSeekTime();
+            int clookSeek = scheduler.C_LOOK(headPosition, requests).getTotalSeekTime();
+
+            // Create a new chart for comparison
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel("Algorithm");
+            yAxis.setLabel("Total Seek Operations");
+
+            BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+            barChart.setTitle("Comparison of Disk Scheduling Algorithms");
+
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Seek Operations");
+            series.getData().add(new XYChart.Data<>("FCFS", fcfsSeek));
+            series.getData().add(new XYChart.Data<>("SSTF", sstfSeek));
+            series.getData().add(new XYChart.Data<>("SCAN", scanSeek));
+            series.getData().add(new XYChart.Data<>("C-SCAN", cscanSeek));
+            series.getData().add(new XYChart.Data<>("C-LOOK", clookSeek));
+
+            barChart.getData().add(series);
+
+            // Create a new stage to display the bar chart
+            Stage comparisonStage = new Stage();
+            comparisonStage.setTitle("Comparison Bar Chart");
+            Scene scene = new Scene(barChart, 800, 600);
+            comparisonStage.setScene(scene);
+            comparisonStage.show();
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter valid numbers!");
+            alert.showAndWait();
+        }
     }
 
     public static void main(String[] args) {

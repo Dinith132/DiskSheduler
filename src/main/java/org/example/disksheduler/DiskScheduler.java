@@ -83,7 +83,6 @@ public class DiskScheduler {
                 seekSequence.add(i);
                 requestsList.remove(Integer.valueOf(i));
 
-                System.out.println("removes======================================="+i);
             }
         }
 
@@ -96,7 +95,6 @@ public class DiskScheduler {
         for (int i = start; i <= end; i++) {
 
             if (requestsList.contains(i)) {
-                System.out.println("up======================================="+i);
                 totalSeekTime += Math.abs(currentPosition - i);
                 currentPosition = i;
                 seekSequence.add(i);

@@ -13,6 +13,7 @@ public class DiskScheduleResult {
         for (int i = 0; i < seekSequence.size(); i++) {
             this.seekSequence[i] = seekSequence.get(i);
         }
+
     }
 
     public int getTotalSeekTime() {
